@@ -29,8 +29,15 @@ public class Account {
 
 	
 	// 출금 기능
+	public void withdraw(Long amount) {
+		// 방어적 코드 작성 - todo 마이너스값은 안돼
+		this.balance -= amount;
+	}
 	// 입금 기능
+	public void deposit(Long amount) {
+		this.balance += amount;
+	}
 	// 패스워트 체크
-	// 잔액 여부 확인 가능
-	// 
+	// 잔액 여부 확인 기능
+	// 계좌 소유자 확인 기능
 }

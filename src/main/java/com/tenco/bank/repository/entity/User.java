@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder  // bulder pattern 으로 만들고 싶다면 
+@Builder  // builder pattern 으로 만들고 싶다면 
 public class User {
 	
 
