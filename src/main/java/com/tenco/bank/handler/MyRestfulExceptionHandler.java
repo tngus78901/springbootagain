@@ -27,7 +27,21 @@ public class MyRestfulExceptionHandler {
 		StringBuffer sb = new StringBuffer(); // 멀티 스레드 환경에서 좀 더 안정적이다
 		sb.append("<script>");
 		sb.append("alert('" + e.getMessage() + "');");
+		sb.append("window.history.back();");
 		sb.append("</script>");
 		return sb.toString();
 	}
+	
+	@ExceptionHandler(UnAuthorizedException.class)
+	public String unAuthorizedException(UnAuthorizedException e) {
+		StringBuffer sb = new StringBuffer();
+		sb.append("<script>");
+		sb.append("alert('" + e.getMessage() + "');");
+		sb.append("location.href='/user/sign-in';");
+		sb.append("</script>");
+		return sb.toString();
+		
+	}
+	
+	
 }
