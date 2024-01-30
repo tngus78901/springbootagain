@@ -12,6 +12,7 @@ import com.tenco.bank.dto.SignUpFormDTO;
 import com.tenco.bank.handler.exception.CustomRestfulException;
 import com.tenco.bank.repository.entity.User;
 import com.tenco.bank.service.UserService;
+import com.tenco.bank.utils.Define;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -95,8 +96,7 @@ public class UserController {
 		
 		// 서비스 호출 예정
 		User user = userService.readUser(dto);
-		httpSession.setAttribute("principal", user);
-		
+		httpSession.setAttribute(Define.PRINCIPAL, user);
 		// 로그인 완료 --> 결정(account/list)
 		// todo 수정 예정 (현재 접근 경로 없음)
 		return "redirect:/user/sign-in";
