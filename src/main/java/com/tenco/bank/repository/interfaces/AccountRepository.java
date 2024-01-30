@@ -13,9 +13,9 @@ public interface AccountRepository {
 	public int updateById(Account account);
 	public int deleteById(Integer id);
 	
-	// 계좌 조회 - 1 유저, N계좌
-	public List<Account> findAllByUserId();
-	public Account findByNumber(Integer id);
+	// 계좌 조회 - 1 유저, N계좌 하나의 유저는 n개의 계좌를 가질 수 있다.
+	public List<Account> findAllByUserId(Integer userId);
+	public Account findByNumber(String number);
 	
 
 

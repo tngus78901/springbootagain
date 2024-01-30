@@ -8,11 +8,11 @@
      <form action="/user/sign-in" method="post">
 	 <div class="form-group">
 	    <label for="username">username:</label>
-	    <input type="text" name="username" class="form-control" placeholder="username" id="username">
+	    <input type="text" name="username" class="form-control" placeholder="username" id="username" value="igota">
 	  </div>
 	  <div class="form-group">
 	    <label for="pwd">password:</label>
-	    <input type="password" name="password" class="form-control" placeholder="Enter password" id="pwd">
+	    <input type="password" name="password" class="form-control" placeholder="Enter password" id="pwd" value="1234">
 	  </div>
 	  
 	  <button type="submit" class="btn btn-primary">로그인</button>
