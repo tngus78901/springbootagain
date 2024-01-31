@@ -99,7 +99,7 @@ public class UserController {
 		httpSession.setAttribute(Define.PRINCIPAL, user);
 		// 로그인 완료 --> 결정(account/list)
 		// todo 수정 예정 (현재 접근 경로 없음)
-		return "redirect:/user/sign-in";
+		return "redirect:/account/list";
 		
 	}
 	
