@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.tenco.bank.dto.AccountSaveFormDto;
 import com.tenco.bank.dto.DepositFormDto;
+import com.tenco.bank.dto.TransferFormDto;
 import com.tenco.bank.dto.WithdrawFormDto;
 import com.tenco.bank.handler.exception.CustomRestfulException;
 import com.tenco.bank.repository.entity.Account;
@@ -144,5 +145,16 @@ public class AccountService {
 			throw new CustomRestfulException("정상 처리 되지 않았습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+
+	// 이체 기능 만들기////////////마무리하기 하나만 했다 0131
+	public void updateAccountTransfer(TransferFormDto dto, Integer principalId) {
+		Account accountEntity = accountRepository.findByNumber(dto.getTAccountNumber());
+		if (accountEntity == null) {
+			throw new CustomRestfulException(Define.NOT_EXIST_ACCOUNT, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+	}
+
+	
 
 }
