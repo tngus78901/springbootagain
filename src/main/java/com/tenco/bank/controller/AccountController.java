@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.tenco.bank.dto.AccountSaveFormDto;
+import com.tenco.bank.dto.DepositFormDto;
 import com.tenco.bank.dto.WithdrawFormDto;
 import com.tenco.bank.handler.UnAuthorizedException;
 import com.tenco.bank.handler.exception.CustomRestfulException;
@@ -135,7 +136,7 @@ public class AccountController {
 					HttpStatus.BAD_REQUEST);
 		}
 		
-		// <= 0 
+		//   <= 0 
 		if(dto.getAmount().longValue() <= 0) {
 			throw new UnAuthorizedException("출금 금액이 0원 이하일 수 없습니다", 
 					HttpStatus.BAD_REQUEST);
@@ -153,6 +154,54 @@ public class AccountController {
 		accountService.updateAccountWithdraw(dto, principal.getId());
 		return "redirect:/account/list";
 	}
-}
+	// 입금 요청 페이지 
+	@GetMapping("/deposit")
+	public String depositPage() {
+		User principal = (User)session.getAttribute(Define.PRINCIPAL);
+		if(principal == null) {
+			throw new UnAuthorizedException("로그인 먼저 해주세요", 
+					HttpStatus.UNAUTHORIZED);
+		}
+		return "account/deposit";
+	}
+
+	// 입금 요청 로직 만들기
+	@PostMapping("/deposit")
+	public String depositProc(DepositFormDto dto) {
+		// 인증 검사
+		User principal = (User)session.getAttribute(Define.PRINCIPAL);
+			if(principal == null) {
+				throw new UnAuthorizedException("로그인 먼저 해주세요", 
+						HttpStatus.UNAUTHORIZED);
+			}
+			// 유효성 검사
+			if(dto.getAmount() ==  null) {
+				throw new UnAuthorizedException("금액을 입력 하시오", 
+						HttpStatus.BAD_REQUEST);
+			}
+		
+			// <= 0 
+			if(dto.getAmount().longValue() <= 0) {
+				throw new UnAuthorizedException("입금 금액이 0원 이하일 수 없습니다", 
+						HttpStatus.BAD_REQUEST);
+			} 
+			if(dto.getDAccountPassword() == null || dto.getDAccountPassword().isEmpty()) {
+				throw new UnAuthorizedException("계좌 번호를 입력 하시오", 
+						HttpStatus.BAD_REQUEST);
+			}
+			
+			if(dto.getDAccountPassword() == null || dto.getDAccountNumber().isEmpty()) {
+				throw new UnAuthorizedException("계좌 비밀 번호를 입력 하시오", 
+						HttpStatus.BAD_REQUEST);
+			}
+			// 서비스 호출
+			accountService.updateAccountDeposit(dto, principal.getId());
+			return "redirect:/account/deposit";
+		}
+
+	}
+
+
+
 
 

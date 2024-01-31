@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tenco.bank.dto.AccountSaveFormDto;
+import com.tenco.bank.dto.DepositFormDto;
 import com.tenco.bank.dto.WithdrawFormDto;
 import com.tenco.bank.handler.exception.CustomRestfulException;
 import com.tenco.bank.repository.entity.Account;
@@ -91,6 +92,39 @@ public class AccountService {
 		history.setDBalance(null);
 		history.setWAccountId(accountEntity.getId());
 		history.setDAccountId(null);
+		
+		int rowResultCount = historyRepository.insert(history);
+		if(rowResultCount != 1) {
+			throw new CustomRestfulException("정상 처리 되지 않았습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	// 입금 
+	public void updateAccountDeposit(DepositFormDto dto, Integer principalId) {
+		// 1
+		Account accountEntity = accountRepository.findByNumber(dto.getDAccountNumber());
+		if(accountEntity == null) {
+			throw new CustomRestfulException(Define.NOT_EXIST_ACCOUNT, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		// 2.
+		accountEntity.checkOwner(principalId);
+		//if(accountEntity.getUserId() != principalId) {
+			//throw new CustomRestfulException("본인 소유 계좌가 아닙니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+		//}
+		// 3. (String) 불변		
+		accountEntity.checkPassword(dto.getDAccountPassword());
+		// 4
+		accountEntity.checkBalance(dto.getAmount());
+		// 5  --> 출금 기능(Account) --> 객체 상태값 변경
+		accountEntity.deposit(dto.getAmount());
+		accountRepository.updateById(accountEntity);
+		// 6 
+		History history = new History();
+		history.setAmount(dto.getAmount());
+		history.setDBalance(accountEntity.getBalance());
+		history.setWBalance(null);
+		history.setDAccountId(accountEntity.getId());
+		history.setWAccountId(null);
 		
 		int rowResultCount = historyRepository.insert(history);
 		if(rowResultCount != 1) {
