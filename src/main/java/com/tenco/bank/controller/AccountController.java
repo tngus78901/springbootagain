@@ -32,8 +32,8 @@ import jakarta.websocket.server.PathParam;
 @RequestMapping("/account")
 public class AccountController {
 
-	@Autowired
-	private HttpSession session;
+	@Autowired // 가독성
+	private HttpSession session;  // final 키워드를 사용하면 메모리 성능 효율이 좋음
 	@Autowired
 	private AccountService accountService;
 
@@ -43,7 +43,7 @@ public class AccountController {
 	 * @return saveForm.jsp
 	 */
 	@GetMapping("/save")
-	public String savePage() {
+	public String savePage() {   // 인증검사
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		if (principal == null) {
 			throw new UnAuthorizedException("로그인 먼저 해주세요", HttpStatus.UNAUTHORIZED);
@@ -57,7 +57,7 @@ public class AccountController {
 	 * @param dto
 	 * @return list.jsp
 	 */
-	@PostMapping("/save")
+	@PostMapping("/save") // body --> String --> 파싱(DTO)
 	public String saveProc(AccountSaveFormDto dto) {
 		// 1. 인증 검사
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
@@ -93,7 +93,7 @@ public class AccountController {
 		if (principal == null) {
 			throw new UnAuthorizedException("로그인 먼저 해주세요", HttpStatus.UNAUTHORIZED);
 		}
-
+		// 경우의 수 유,무
 		List<Account> accountList = accountService.readAccountListByUserId(principal.getId());
 
 		if (accountList.isEmpty()) {
@@ -107,7 +107,7 @@ public class AccountController {
 
 	// 출금 페이지 요청
 	@GetMapping("/withdraw")
-	public String withdrawPage() {
+	public String withdrawPage() { //1. 인증검사
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		if (principal == null) {
 			throw new UnAuthorizedException("로그인 먼저 해주세요", HttpStatus.UNAUTHORIZED);
@@ -119,20 +119,20 @@ public class AccountController {
 	// 출금 요청 로직 만들기
 	@PostMapping("/withdraw")
 	public String withdrawProc(WithdrawFormDto dto) {
-		// 인증 검사
+		// 1. 인증 검사
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		if (principal == null) {
 			throw new UnAuthorizedException("로그인 먼저 해주세요", HttpStatus.UNAUTHORIZED);
 		}
-		// 유효성 검사
+		// 2. 유효성 검사
 		if (dto.getAmount() == null) {
 			throw new CustomRestfulException("금액을 입력 하시오", HttpStatus.BAD_REQUEST);
 		}
-
+		// <=0
 		if (dto.getAmount().longValue() <= 0) {
 			throw new CustomRestfulException("출금 금액이 0원 이하일 수 없습니다", HttpStatus.BAD_REQUEST);
 		}
-
+		//   <= 0 
 		if (dto.getWAccountNumber() == null || dto.getWAccountNumber().isEmpty()) {
 			throw new CustomRestfulException("계좌 번호를 입력 하시오", HttpStatus.BAD_REQUEST);
 		}
@@ -246,14 +246,15 @@ public class AccountController {
 		
 		Account account = accountService.readByAccountId(id);
 		
-		// 서스비 호출
+		// 서비스 호출
 		List<CustomHistoryEntity> historyList = accountService.readHistoryListByAccount(type, id);
 		System.out.println("list : " + historyList.toString());
 		
+		// 응답 결과물 --> jsp 파일에 내려주기
 		model.addAttribute("account", account);
 		model.addAttribute("historyList", historyList);
 		
 		return "account/detail";
 	}
-
+	
 }
