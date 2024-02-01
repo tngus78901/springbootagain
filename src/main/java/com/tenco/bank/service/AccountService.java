@@ -15,6 +15,7 @@ import com.tenco.bank.dto.WithdrawFormDto;
 import com.tenco.bank.handler.UnAuthorizedException;
 import com.tenco.bank.handler.exception.CustomRestfulException;
 import com.tenco.bank.repository.entity.Account;
+import com.tenco.bank.repository.entity.CustomHistoryEntity;
 import com.tenco.bank.repository.entity.History;
 import com.tenco.bank.repository.entity.User;
 import com.tenco.bank.repository.interfaces.AccountRepository;
@@ -150,8 +151,7 @@ public class AccountService {
 	}
 
 	// 이체 기능 만들기////////////마무리하기 하나만 했다 0131
-	
-	
+
 	// 이체 페이지 요청 
 	@GetMapping("/transfer")
 	public String transferPage() {
@@ -163,6 +163,31 @@ public class AccountService {
 
 		return "account/transfer";
 	}
+
+	@Transactional
+	public void updateAccountTransfer(TransferFormDto dto, Integer principalId) {
+		Account accountEntity = accountRepository.findByNumber(dto.getWAccountNumber());
+		if (accountEntity == null) {
+			throw new CustomRestfulException(Define.NOT_EXIST_ACCOUNT, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	/**
+	 * 단일 계좌 거래 내역 검색(전체, 입금, 출금)
+	 * @param type = [all, deposit, withdraw]
+	 * @param id (account_id)
+	 * @return 동적 쿼리 - List
+	 */
+	// 계좌 상세 
+	public List<CustomHistoryEntity> readHistoryListByAccount(String type, Integer id) {
+		return historyRepository.findByIdHistoryType(type, id);
+	}
+
+	// 단일 계좌 조회 - AccountById  
+	public Account readByAccountId(Integer id) {  //select 구문이라 transaction은 안건다
+   		return accountRepository.findByAccountId(id);
+	}
+
 	
 
 }
