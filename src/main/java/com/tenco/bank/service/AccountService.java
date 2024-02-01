@@ -147,6 +147,7 @@ public class AccountService {
 	}
 
 	// 이체 기능 만들기////////////마무리하기 하나만 했다 0131
+	@Transactional
 	public void updateAccountTransfer(TransferFormDto dto, Integer principalId) {
 		Account accountEntity = accountRepository.findByNumber(dto.getTAccountNumber());
 		if (accountEntity == null) {
