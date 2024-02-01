@@ -42,7 +42,7 @@ public class Account {
 	public void deposit(Long amount) {
 		this.balance += amount;
 	}
-	// 패스워트 체크
+	// 패스워드 체크
 	public void checkPassword(String password) {
 		if(this.password.equals(password) ==  false) {
 			throw new CustomRestfulException("계좌 비밀번호가 틀렸습니다.", HttpStatus.BAD_REQUEST);

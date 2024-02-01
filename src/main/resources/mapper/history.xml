@@ -3,8 +3,7 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.tenco.bank.repository.interfaces.HistoryRepository">
 
-	<insert id="insert"
-		parameterType="com.tenco.bank.repository.entity.History">
+	<insert id="insert" parameterType="com.tenco.bank.repository.entity.History">
 		insert into
 		history_tb(
 		amount, w_balance, d_balance,
@@ -16,12 +15,10 @@
 		)
 	</insert>
 
-	<update id="updateById"
-		parameterType="com.tenco.bank.repository.entity.History">
+	<update id="updateById" parameterType="com.tenco.bank.repository.entity.History">
 		update history_tb
 		set amount = #{amount},
-		w_balance =
-		#{wBalance},
+		w_balance = #{wBalance},
 		d_balace = #{dBalance},
 		w_account_id = #{wAccountId},
 		d_account_id = #{dAccountId}
@@ -35,19 +32,17 @@
 		where id = #{id}
 	</delete>
 
-	<select id="findById"
-		resultType="com.tenco.bank.repository.entity.History">
+	<select id="findById" resultType="com.tenco.bank.repository.entity.History">
 		select * from history_tb where id = #{id}
 	</select>
 
-	<select id="findAll"
-		resultType="com.tenco.bank.repository.entity.History">
+	<select id="findAll" resultType="com.tenco.bank.repository.entity.History">
 		select * from history_tb
 	</select>
-
-		<select id="findByIdHistoryType" resultType="com.tenco.bank.repository.entity.CustomHistoryEntity">
+	
+	<select id="findByIdHistoryType" resultType="com.tenco.bank.repository.entity.CustomHistoryEntity">
 	<if test="type == 'withdraw'">
-		select h.id, h.amount, h.w_balance,
+		select h.id, h.amount, h.w_balance as balance,
 			   wa.number as sender, h.created_at, 
 		       ifnull(h.d_account_id, 'ATM') as receiver, 
 		       da.number
@@ -85,5 +80,5 @@
 		on h.w_account_id = wa.id 
 		where h.d_account_id = #{id} or h.w_account_id = #{id}
 	</if> 
-	</select>
+</select>
 </mapper>

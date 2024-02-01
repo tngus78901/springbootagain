@@ -8,7 +8,7 @@
      <form action="/account/withdraw" method="post">
 	 <div class="form-group">
 	    <label for="amount">출금 금액:</label>
-	    <input type="text" name="amount" class="form-control" placeholder="Enternumber" id="amount" value="1000">
+	    <input type="text" name="amount" class="form-control" placeholder="Enter amount" id="amount" value="1000">
 	  </div>
 	 <div class="form-group">
 	    <label for="wAccountNumber">출금 계좌번호:</label>
@@ -16,7 +16,7 @@
 	  </div>
 	  <div class="form-group">
 	    <label for="pwd">출금 계좌 비밀번호:</label>
-	    <input type="password" name="wAccountPassword" class="form-control" placeholder="출금 계좌 비밀번호 입력" id="pwd" value="1234">
+	    <input type="password" name="wAccountPassword" class="form-control" placeholder="출금 계좌 비밀번호 입력" id="wAccountPassword" value="1234">
 	  </div>
 	  
 	  <button type="submit" class="btn btn-primary">출금</button>

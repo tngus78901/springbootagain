@@ -19,7 +19,7 @@
 		<c:forEach var="account" items="${accountList}">
 			<tr>
 				<td><a href="/account/detail/${account.id}">${account.number}</a></td>
-				<td>${account.formatBalance}</td>
+				<td>${account.formatBalance()}</td>
 			</tr>
 		</c:forEach>
 		

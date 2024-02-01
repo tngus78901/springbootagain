@@ -12,9 +12,9 @@
 			<table class=table style="border: 1px solid #dee2e6">
 				<thead>
 					<tr>
-						<th>길동 님의계좌</th>
-						<th>계좌번호 : 1111</th>
-						<th>잔액 : 50000원</th>
+						<th>${principal.username} 님의계좌</th>
+						<th>계좌번호 : ${account.number}</th>
+						<th>잔액 : ${account.balance}원</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -40,13 +40,13 @@
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach var="history" items="${historyList}">  // 공백 조금만 있어도 에러뜬다 조심!
+					<c:forEach var="history" items="${historyList}">
 						<tr>
 							<td>${history.formatCreatedAt()}</td>
 							<td>${history.sender}</td>
 							<td>${history.receiver}</td>
 							<td>${history.amount}</td>
-							<td>${history.formatBalance}</td>
+							<td>${history.formatBalance()}</td>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -56,5 +56,6 @@
 </div>
 </div>
 </div>
+
 <!-- footer -->
 <%@ include file="/WEB-INF/view/layout/footer.jsp"%>
