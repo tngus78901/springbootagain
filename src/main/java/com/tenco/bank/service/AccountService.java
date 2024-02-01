@@ -6,14 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import com.tenco.bank.dto.AccountSaveFormDto;
 import com.tenco.bank.dto.DepositFormDto;
 import com.tenco.bank.dto.TransferFormDto;
 import com.tenco.bank.dto.WithdrawFormDto;
+import com.tenco.bank.handler.UnAuthorizedException;
 import com.tenco.bank.handler.exception.CustomRestfulException;
 import com.tenco.bank.repository.entity.Account;
 import com.tenco.bank.repository.entity.History;
+import com.tenco.bank.repository.entity.User;
 import com.tenco.bank.repository.interfaces.AccountRepository;
 import com.tenco.bank.repository.interfaces.HistoryRepository;
 import com.tenco.bank.utils.Define;
@@ -147,15 +150,19 @@ public class AccountService {
 	}
 
 	// 이체 기능 만들기////////////마무리하기 하나만 했다 0131
-	@Transactional
-	public void updateAccountTransfer(TransferFormDto dto, Integer principalId) {
-		Account accountEntity = accountRepository.findByNumber(dto.getTAccountNumber());
-		if (accountEntity == null) {
-			throw new CustomRestfulException(Define.NOT_EXIST_ACCOUNT, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+	
+	
+	// 이체 페이지 요청 
+	@GetMapping("/transfer")
+	public String transferPage() {
+		// 1. 인증 검사
+		//User principal = (User) session.getAttribute(Define.PRINCIPAL); // 다운 캐스팅
+		//if (principal == null) {
+		//	throw new UnAuthorizedException(Define.ENTER_YOUR_LOGIN, HttpStatus.UNAUTHORIZED);
+		//}
 
+		return "account/transfer";
 	}
-
 	
 
 }
