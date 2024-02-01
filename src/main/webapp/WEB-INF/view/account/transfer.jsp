@@ -27,8 +27,7 @@
     <input type="text" name="dAccountNumber" class="form-control" placeholder="출금 계좌번호 입력" id="dAccountNumber" value="1111">
   </div>
   
-  
-  <button type="submit" class="btn btn-primary">입금</button>
+  <button type="submit" class="btn btn-primary">이체하기</button>
 </form>
 </div>
 </div>
