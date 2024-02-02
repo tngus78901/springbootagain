@@ -61,9 +61,7 @@ public class AccountController {
 	public String saveProc(AccountSaveFormDto dto) {
 		// 1. 인증 검사
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
-		if (principal == null) {
-			throw new UnAuthorizedException("로그인 먼저 해주세요", HttpStatus.UNAUTHORIZED);
-		}
+		
 		// 2. 유효성 검사
 		if (dto.getNumber() == null || dto.getNumber().isEmpty()) {
 			throw new CustomRestfulException("계좌번호를입력하세요", HttpStatus.BAD_REQUEST);
@@ -90,9 +88,7 @@ public class AccountController {
 	public String listPage(Model model) {
 		// 1. 인증 검사
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
-		if (principal == null) {
-			throw new UnAuthorizedException("로그인 먼저 해주세요", HttpStatus.UNAUTHORIZED);
-		}
+		
 		// 경우의 수 유,무
 		List<Account> accountList = accountService.readAccountListByUserId(principal.getId());
 
@@ -121,9 +117,6 @@ public class AccountController {
 	public String withdrawProc(WithdrawFormDto dto) {
 		// 1. 인증 검사
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
-		if (principal == null) {
-			throw new UnAuthorizedException("로그인 먼저 해주세요", HttpStatus.UNAUTHORIZED);
-		}
 		// 2. 유효성 검사
 		if (dto.getAmount() == null) {
 			throw new CustomRestfulException("금액을 입력 하시오", HttpStatus.BAD_REQUEST);
@@ -151,11 +144,7 @@ public class AccountController {
 	@GetMapping("/deposit")
 	public String depositPage() {
 		// 1. 인증 검사
-		User principal = (User) session.getAttribute(Define.PRINCIPAL); // 다운 캐스팅
-		if (principal == null) {
-			throw new UnAuthorizedException(Define.ENTER_YOUR_LOGIN, HttpStatus.UNAUTHORIZED);
-		}
-
+		
 		return "account/deposit";
 	}
 
@@ -190,11 +179,6 @@ public class AccountController {
 	@GetMapping("/transfer")
 	public String transferPage() {
 		// 1. 인증 검사
-		User principal = (User) session.getAttribute(Define.PRINCIPAL); // 다운 캐스팅
-		if (principal == null) {
-			throw new UnAuthorizedException(Define.ENTER_YOUR_LOGIN, HttpStatus.UNAUTHORIZED);
-		}
-
 		return "account/transfer";
 	}
 
@@ -203,9 +187,7 @@ public class AccountController {
 	public String transferProc(TransferFormDto dto) {
 		// 1. 인증 검사
 		User principal = (User) session.getAttribute(Define.PRINCIPAL); // 다운 캐스팅
-		if (principal == null) {
-			throw new UnAuthorizedException(Define.ENTER_YOUR_LOGIN, HttpStatus.UNAUTHORIZED);
-		}
+		
 
 		// 2. 유효성 검사
 		if (dto.getAmount() == null) {
@@ -240,9 +222,7 @@ public class AccountController {
 			
 		// 1. 인증 검사
 		User principal = (User) session.getAttribute(Define.PRINCIPAL); // 다운 캐스팅
-		if (principal == null) {
-			throw new UnAuthorizedException(Define.ENTER_YOUR_LOGIN, HttpStatus.UNAUTHORIZED);
-		}
+		
 		
 		Account account = accountService.readByAccountId(id);
 		

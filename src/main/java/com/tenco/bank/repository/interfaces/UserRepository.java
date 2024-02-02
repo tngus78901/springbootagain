@@ -11,14 +11,14 @@ import com.tenco.bank.repository.entity.User;
 @Mapper
 public interface UserRepository {
 
-	public int insert(SignUpFormDTO user);//entity user
+	public int insert(User user);//entity user
 	public int updateById(User user);
 	public int deleteById(Integer id);
 	public User findById(Integer id); // 관리자
 	public List<User> findAll();
 	
 	// 사용자 username으로 존재 여부 확인
-	public User findByUsername(User user);
+	public User findByUsername(String username);
 	public User findByUsernameAndPassword(User user);
 	
 	
