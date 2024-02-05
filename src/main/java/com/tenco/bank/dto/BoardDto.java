@@ -1,5 +1,13 @@
 package com.tenco.bank.dto;
 
-public class BoardDto {
+import lombok.Data;
 
+@Data
+public class BoardDto {
+	
+	private int id;
+    private String title;
+    private String body;
+    private int userId;
+	
 }

@@ -33,7 +33,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		// 가짜경로 --<
+		// 가짜경로 <--
 		registry.addResourceHandler("/images/upload/**")
 		.addResourceLocations("file:///C:\\work_spring\\upload/");
 	}

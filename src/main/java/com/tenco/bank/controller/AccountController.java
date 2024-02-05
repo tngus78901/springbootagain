@@ -47,7 +47,9 @@ public class AccountController {
 		User principal = (User) session.getAttribute(Define.PRINCIPAL);
 		if (principal == null) {
 			throw new UnAuthorizedException("로그인 먼저 해주세요", HttpStatus.UNAUTHORIZED);
+			
 		}
+		
 		return "account/saveForm";
 	}
 
@@ -72,9 +74,9 @@ public class AccountController {
 		if (dto.getBalance() == null || dto.getBalance() < 0) {
 			throw new CustomRestfulException("잘못된 금액 입니다", HttpStatus.BAD_REQUEST);
 		}
-
+		System.out.println("맹글어짐?");
 		accountService.createAccount(dto, principal.getId());
-
+		
 		return "redirect:/account/list";
 	}
 

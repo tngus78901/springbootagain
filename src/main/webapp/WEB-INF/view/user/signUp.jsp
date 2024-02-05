@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
 <%@ include file="/WEB-INF/view/layout/header.jsp"%>
 
 <div class="col-sm-8">
@@ -24,11 +23,10 @@
 				name="fullname" class="form-control" placeholder="fullname"
 				id="fullname">
 		</div>
-
 		<div class="custom-file">
 			<input type="file" class="custom-file-input" id="customFile"
-				name="customFile"> <label class="custom-file-label"
-				for="customFile">Choose file</label>
+				name="customFile"> 
+			<label class="custom-file-label" for="customFile">Choose file</label>
 		</div>
 
 		<br>
@@ -39,7 +37,6 @@
 </div>
 </br>
 </div>
-
 
 <script>
 <!--  Add the following code if you want the name of the file appear on select-->

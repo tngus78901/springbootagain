@@ -68,10 +68,10 @@ public class UserController {
 			throw new CustomRestfulException("fullname을 입력하세요", 
 			HttpStatus.BAD_REQUEST);
 		}
-		System.out.println("1111111");
 		
 		// 파일 업로드
 		MultipartFile file = dto.getCustomFile();
+		System.out.println("file" + file.getOriginalFilename());
 		if(file.isEmpty() == false) {
 			// 사용자가 이미지를 업로드했다면 기능 구현
 			// 파일 사이즈 체크
@@ -87,18 +87,16 @@ public class UserController {
 			if(dir.exists() == false) {
 				dir.mkdir(); // 폴더가 없으면 폴더 생성
 			}
-			
 		}
-			// 파일 이름(중복 처리 예방)
+		System.out.println("///////////여기는?");
+		// 파일 이름(중복 처리 예방)
 		UUID uuid = UUID.randomUUID();
 		String fileName = uuid + "_" + file.getOriginalFilename();
 		System.out.println("fileName: " + fileName);
-		userService.createUser(dto);
-	
-		//C:\\work_spring\\upload\ab.png
-		String uploadPath = Define.UPLOAD_FILE_DIRECTORY + File.separator + fileName;
+		// C:\\wok_spring\\upload\ab.png
 		
-		
+		String uploadPath 
+			= Define.UPLOAD_FILE_DIRECTORY + File.separator + fileName;
 		File destination = new File(uploadPath);
 		
 		try {
@@ -111,6 +109,7 @@ public class UserController {
 		dto.setOriginFileName(file.getOriginalFilename());
 		dto.setUploadFileName(fileName);
 		
+		userService.createUser(dto);
 		return "redirect:/user/sign-in"; 
 	}
 	
@@ -156,7 +155,4 @@ public class UserController {
 		httpSession.invalidate();
 		return "redirect:/user/sign-in";
 	}
-	
 }
-
-
