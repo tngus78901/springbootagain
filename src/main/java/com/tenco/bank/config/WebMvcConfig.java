@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.tenco.bank.handler.AuthInterceptor;
@@ -29,5 +30,11 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-		
+	
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		// 가짜경로 --<
+		registry.addResourceHandler("/images/upload/**")
+		.addResourceLocations("file:///C:\\work_spring\\upload/");
+	}
 }
