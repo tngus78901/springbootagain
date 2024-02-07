@@ -112,5 +112,5 @@ public class RestControllerTest {
 		System.out.println("TEST : BDTO " + boardDto.toString());
 		return ResponseEntity.status(HttpStatus.OK).body(response.getBody());
 	}
-
+	
 }

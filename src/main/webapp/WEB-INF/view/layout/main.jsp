@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
-	<!-- header.jsp -->
-	<%@ include file="/WEB-INF/view/layout/header.jsp" %>
+<%@ include file="/WEB-INF/view/layout/header.jsp" %>
     
     <!--  여기 아래 부분 부터 main 영역으로 사용 예정 -->
     <div class="col-sm-8">
@@ -22,6 +20,4 @@
 </div>
 <!-- end of main -->
 
-<!-- footer.jsp -->
 <%@ include file="/WEB-INF/view/layout/footer.jsp" %>
-    
